@@ -15,7 +15,7 @@ palmscan/
 ## Software usage
 ### Example command line:
 ```nifH_palmscan -search_pp protein.faa -all -nifH -model v16.nifH.pssm -ppout nifH.scanned.faa -fevout nifH.scanned.fev -report nifH.scanned.txt```
-### Type palmscan -help for option details.
+#### Type palmscan -help for option details.
 
 ## Reference
 A. Babaian and R. C. Edgar (2022), Ribovirus classification by a polymerase barcode sequence, PeerJ. https://peerj.com/articles/14055/
