@@ -1,9 +1,8 @@
 # nifH_palmscan
 
 ## nifH_Palmscan algorithm
-nifH-Palmscan developed based on the framework of Palmscan (A. Babaian and R. C. Edgar, 2022) 
-
-nifH_palmscan modeling the palmprint of the nitrogenase iron protein — a segment of the sub-domain with well-conserved catalytic motifs — for scanning it from DNA/protein file.
+nifH_palmscan is software designed to scan the palmprint of the nitrogenase iron protein (a segment with well-conserved catalytic motifs) from DNA/protein file. 
+nifH-Palmscan is developed based on the framework of Palmscan (A. Babaian and R. C. Edgar, 2022).
 
 ## Repository layout
 ```
