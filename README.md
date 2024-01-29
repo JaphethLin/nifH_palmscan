@@ -18,6 +18,7 @@ palmscan/
 #### Type palmscan -help for option details.
 
 ## Reference
-A. Babaian and R. C. Edgar (2022), Ribovirus classification by a polymerase barcode sequence, PeerJ. https://peerj.com/articles/14055/
 
-R. C. Edgar et al. (2021), Petabase-scale sequence alignment catalyses viral discovery, Nature 2022 https://www.nature.com/articles/s41586-021-04332-2
+A. Babaian and R. C. Edgar, Ribovirus classification by a polymerase barcode sequence, PeerJ (2022) https://peerj.com/articles/14055
+
+R. C. Edgar et al., Petabase-scale sequence alignment catalyses viral discovery, Nature (2021) https://www.nature.com/articles/s41586-021-04332-2
