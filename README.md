@@ -10,6 +10,7 @@ palmscan/
   src/               # Source code (C++)
   v16.nifH.pssm      # PSSM matrices
   nifH_palmscan      # Binary file
+  protein.faa        # Demo for test
 ```
 
 ## OS Requirements
