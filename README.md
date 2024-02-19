@@ -12,10 +12,32 @@ palmscan/
   nifH_palmscan      # Binary file
 ```
 
+## OS Requirements
+```
+The developmental version of the package has been tested on the following architecture and operating systems:
+Linux: Red Hat 4.8.5-44
+Architecture: x86_64
+```
+
+## Installation Guide
+```
+yum install ccache gcc-c++ make git glibc-static -y
+git clone https://github.com/JaphethLin/nifH_palmscan.git
+cd palmscan/src
+make
+```
+
 ## Software usage
 ### Example command line:
 ```nifH_palmscan -search_pp protein.faa -all -nifH -model v16.nifH.pssm -ppout nifH.scanned.faa -fevout nifH.scanned.fev -report nifH.scanned.txt```
 #### Type palmscan -help for option details.
+
+## Results
+```
+nifH.scanned.faa      # All scanned nifH palmprint sequence fragments
+nifH.scanned.fev      # Details of scoring
+nifH.scanned.txt      # Sequences aligned to the model
+```
 
 ## Reference
 
