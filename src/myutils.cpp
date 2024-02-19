@@ -52,7 +52,7 @@ FILE *g_fRep;
 static char **g_ThreadStrs;
 static unsigned g_ThreadStrCount;
 
-// »ñµÃÏß³Ì±àºÅµÄ×Ö·û´®»º´æÇøµØÖ·
+// è·å¾—çº¿ç¨‹ç¼–å·çš„å­—ç¬¦ä¸²ç¼“å­˜åŒºåœ°å€
 static char *GetThreadStr()
 	{
 	unsigned ThreadIndex = (unsigned) omp_get_thread_num();
@@ -640,13 +640,13 @@ double GetUsableMemBytes()
 	return RAM;
 	}
 
-//  ¸ñÊ½»¯ÄÚÈİ²¢·µ»Ø¸ø Str
+//  æ ¼å¼åŒ–å†…å®¹å¹¶è¿”å›ç»™ Str
 void myvstrprintf(string &Str, const char *Format, va_list ArgList)
 	{
-	char *szStr = GetThreadStr();		// »ñÈ¡µ±Ç°Ïß³ÌµÄ»º³å×Ö·ûÇø szStr
-	vsnprintf(szStr, MAX_FORMATTED_STRING_LENGTH-1, Format, ArgList);	// ½«¸ñÊ½»¯ºóµÄ×Ö·û´®Êä³öµ½ szStr
+	char *szStr = GetThreadStr();		// è·å–å½“å‰çº¿ç¨‹çš„ç¼“å†²å­—ç¬¦åŒº szStr
+	vsnprintf(szStr, MAX_FORMATTED_STRING_LENGTH-1, Format, ArgList);	// å°†æ ¼å¼åŒ–åçš„å­—ç¬¦ä¸²è¾“å‡ºåˆ° szStr
 	szStr[MAX_FORMATTED_STRING_LENGTH - 1] = '\0';
-	Str.assign(szStr);					// ½« szStr ÖĞµÄ×Ö·û´®ÄÚÈİ¸³Öµ¸ø Str
+	Str.assign(szStr);					// å°† szStr ä¸­çš„å­—ç¬¦ä¸²å†…å®¹èµ‹å€¼ç»™ Str
 	}
 
 void myvstrprintf(string &Str, const char *Format, ...)
@@ -1628,7 +1628,7 @@ static void GetArgsFromFile(const string &FileName, vector<string> &Args)
 	CloseStdioFile(f);
 	}
 
-// Flag ÀàĞÍ²ÎÊı¶ÁÈ¡ £»½«´«ÈëµÄ Optname Óë Flag ×÷±È½Ï£¬ÕÒµ½ÏàÍ¬ Flag Ôò½« opt_flagname optset_flagname ÉèÖÃÎª true£¬²¢·µ»Ø true
+// Flag ç±»å‹å‚æ•°è¯»å– ï¼›å°†ä¼ å…¥çš„ Optname ä¸ Flag ä½œæ¯”è¾ƒï¼Œæ‰¾åˆ°ç›¸åŒ Flag åˆ™å°† opt_flagname optset_flagname è®¾ç½®ä¸º trueï¼Œå¹¶è¿”å› true
 static bool TryFlagOpt(const char *OptName)
 	{
 #define FLAG_OPT(OC, Name)	if (strcmp(OptName, #Name) == 0) { opt_##Name = true; optset_##Name = true; return true; }
@@ -1640,7 +1640,7 @@ static bool TryFlagOpt(const char *OptName)
 	return false;
 	}
 
-// ÕûÊı ÀàĞÍ²ÎÊı¶ÁÈ¡ £»ÔÚ UNS_OPT ²ÎÊı±íÖĞ²éÕÒ OptName £¬½« value ¸³Öµ¸ø opt_argName £¬ ½« optset_argName ¸³ÖµÎª true 
+// æ•´æ•° ç±»å‹å‚æ•°è¯»å– ï¼›åœ¨ UNS_OPT å‚æ•°è¡¨ä¸­æŸ¥æ‰¾ OptName ï¼Œå°† value èµ‹å€¼ç»™ opt_argName ï¼Œ å°† optset_argName èµ‹å€¼ä¸º true 
 static bool TryUnsOpt(const char *OptName, const char *Value)
 	{
 #define UNS_OPT(OC, Name, Default, Min, Max)	if (strcmp(OptName, #Name) == 0) { opt_##Name = atou(Value); optset_##Name = true; return true; }
@@ -1651,7 +1651,7 @@ static bool TryUnsOpt(const char *OptName, const char *Value)
 	return false;
 	}
 
-// ¸¡µãÊıÀàĞÍ²ÎÊı¶ÁÈ¡ £»
+// æµ®ç‚¹æ•°ç±»å‹å‚æ•°è¯»å– ï¼›
 static bool TryFloatOpt(const char *OptName, const char *Value)
 	{
 #define FLT_OPT(OC, Name, Default, Min, Max)	if (strcmp(OptName, #Name) == 0) { opt_##Name = StrToFloat(Value); optset_##Name = true; return true; }
@@ -1662,7 +1662,7 @@ static bool TryFloatOpt(const char *OptName, const char *Value)
 	return false;
 	}
 
-// ×Ö·û´®ÀàĞÍ²ÎÊı¶ÁÈ¡ £»ÔÚ STR_OPT ²ÎÊı±íÖĞ²éÕÒ OptName £¬½« string value ¸³Öµ¸ø opt_argName £¬ ½« optset_argName ¸³ÖµÎª true 
+// å­—ç¬¦ä¸²ç±»å‹å‚æ•°è¯»å– ï¼›åœ¨ STR_OPT å‚æ•°è¡¨ä¸­æŸ¥æ‰¾ OptName ï¼Œå°† string value èµ‹å€¼ç»™ opt_argName ï¼Œ å°† optset_argName èµ‹å€¼ä¸º true 
 static bool TryStrOpt(const char *OptName, const char *Value)
 	{
 #define STR_OPT(OC, Name)	if (strcmp(OptName, #Name) == 0) { opt_##Name = mystrsave(Value); optset_##Name = true; return true; }
@@ -1713,34 +1713,34 @@ void MyCmdLine(int argc, char **argv)
 		if (ArgIndex >= ArgCount)
 			break;
 		const string &Arg = g_Argv[ArgIndex];
-		if (Arg.size() > 1 && Arg[0] == '-')	// ²ÎÊıÎª £º-xxx (-ºóÃæµÄ×Ö·ûÊı>0)
+		if (Arg.size() > 1 && Arg[0] == '-')	// å‚æ•°ä¸º ï¼š-xxx (-åé¢çš„å­—ç¬¦æ•°>0)
 			{
-			string LongName = (Arg.size() > 2 && Arg[1] == '-' ? Arg.substr(2) : Arg.substr(1));	// ÅĞ¶Ï²ÎÊıÊÇ·ñÎª --xxx ĞÎÊ½
-			if (LongName == "help")				// ÅĞ¶ÏÊÇ·ñÎª --help
+			string LongName = (Arg.size() > 2 && Arg[1] == '-' ? Arg.substr(2) : Arg.substr(1));	// åˆ¤æ–­å‚æ•°æ˜¯å¦ä¸º --xxx å½¢å¼
+			if (LongName == "help")				// åˆ¤æ–­æ˜¯å¦ä¸º --help
 				Help();
-			else if (LongName == "version")		// ÅĞ¶ÏÊÇ·ñÎª --version
+			else if (LongName == "version")		// åˆ¤æ–­æ˜¯å¦ä¸º --version
 				{
 				Version(stdout);
 				printf("\n");
 				exit(0);
 				}
 			
-			// Flag ÀàĞÍ ²ÎÊı¶ÁÈ¡
-			bool IsFlag = TryFlagOpt(LongName.c_str());		// ²éÕÒ flag ÀàµÄ²ÎÊı£¬ÈôÕÒµ½Ôò½« opt_flagname optset_flagname ¸³ÖµÎª true
-			if (IsFlag)		// ÈôÕÒµ½ £¬¶ÁÈ¡ÏÂÒ»²ÎÊı£¬²¢Ö±½Ó½øÈëÏÂÒ»ÂÖÑ­»·
+			// Flag ç±»å‹ å‚æ•°è¯»å–
+			bool IsFlag = TryFlagOpt(LongName.c_str());		// æŸ¥æ‰¾ flag ç±»çš„å‚æ•°ï¼Œè‹¥æ‰¾åˆ°åˆ™å°† opt_flagname optset_flagname èµ‹å€¼ä¸º true
+			if (IsFlag)		// è‹¥æ‰¾åˆ° ï¼Œè¯»å–ä¸‹ä¸€å‚æ•°ï¼Œå¹¶ç›´æ¥è¿›å…¥ä¸‹ä¸€è½®å¾ªç¯
 				{
 				++ArgIndex;
 				continue;
 				}
 
-			// Èô´æÔÚ --xxx/-xxx ÀàĞÍµÄ²ÎÊıÍ·µ«²»ÊÇ Flag ÀàĞÍ²ÎÊı£¬Ôò¶ÁÈ¡ºóÃæµÄ²ÎÊıÖµ
+			// è‹¥å­˜åœ¨ --xxx/-xxx ç±»å‹çš„å‚æ•°å¤´ä½†ä¸æ˜¯ Flag ç±»å‹å‚æ•°ï¼Œåˆ™è¯»å–åé¢çš„å‚æ•°å€¼
 			++ArgIndex;
 			if (ArgIndex >= ArgCount)
 				CmdLineErr("Missing value for option --%s", LongName.c_str());
 
 			const char *Value = g_Argv[ArgIndex].c_str();
 
-			// ÕûÊı ²ÎÊı¶ÁÈ¡
+			// æ•´æ•° å‚æ•°è¯»å–
 			bool IsUns = TryUnsOpt(LongName.c_str(), Value);
 			if (IsUns)
 				{
@@ -1748,7 +1748,7 @@ void MyCmdLine(int argc, char **argv)
 				continue;
 				}
 
-			// ¸¡µãÊı ²ÎÊı¶ÁÈ¡
+			// æµ®ç‚¹æ•° å‚æ•°è¯»å–
 			bool IsFloat = TryFloatOpt(LongName.c_str(), Value);
 			if (IsFloat)
 				{
@@ -1756,7 +1756,7 @@ void MyCmdLine(int argc, char **argv)
 				continue;
 				}
 
-			// ×Ö·û´® ²ÎÊı¶ÁÈ¡
+			// å­—ç¬¦ä¸² å‚æ•°è¯»å–
 			bool IsStr = TryStrOpt(LongName.c_str(), Value);
 			if (IsStr)
 				{
@@ -1831,7 +1831,7 @@ static void CompilerInfo()
 	exit(0);
 	}
 
-// ±È½Ï S ºÍ T ×Ö·û´®£¬T ×ßµ½ 0 Ê±·µ»Ø True£¬S!=T Ê±·µ»Ø false
+// æ¯”è¾ƒ S å’Œ T å­—ç¬¦ä¸²ï¼ŒT èµ°åˆ° 0 æ—¶è¿”å› Trueï¼ŒS!=T æ—¶è¿”å› false
 bool StartsWith(const char *S, const char *T)
 	{
 	for (;;)
@@ -1922,7 +1922,6 @@ void PrintCopyright(FILE *f)
 	if (f == 0)
 		return;
 
-	fprintf(f, "(C) Copyright 2021 Robert C. Edgar\n");
 	fprintf(f, "\n");
 	}
 
@@ -2167,7 +2166,7 @@ void myfree(void *p)
 
 #endif // RCE_MALLOC
 
-// ½«¸ñÊ½»¯ºóµÄ×Ö·û´®¸³Öµ¸ø Str
+// å°†æ ¼å¼åŒ–åçš„å­—ç¬¦ä¸²èµ‹å€¼ç»™ Str
 void Ps(string &Str, const char *Format, ...)
 	{
 	va_list ArgList;
@@ -2176,7 +2175,7 @@ void Ps(string &Str, const char *Format, ...)
 	va_end(ArgList);
 	}
 
-// ½«¸ñÊ½»¯ºóµÄ×Ö·û´®×·¼Óµ½ Str
+// å°†æ ¼å¼åŒ–åçš„å­—ç¬¦ä¸²è¿½åŠ åˆ° Str
 void Psa(string &Str, const char *Format, ...)
 	{
 	va_list ArgList;
